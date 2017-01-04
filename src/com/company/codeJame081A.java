@@ -5,7 +5,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.math.BigInteger;
+import java.util.Arrays;
 
 /**
  * Created by JamesL on 1/2/2017.
@@ -46,6 +48,7 @@ public class codeJame081A {
                 }
                 //solution fucntion for dp here
                 int testCaseAns = DP(iXArr, iYArr, length);
+                //int testCaseAns = bruteforce(iXArr, iYArr, length);
                 int caseNum = count+1;
                 System.out.println("Case #" + caseNum + ": " + testCaseAns);
                 writer.println("Case #" + caseNum + ": " + testCaseAns);
@@ -68,6 +71,17 @@ public class codeJame081A {
             }
         }
         return result[length][length];
+    }
+
+    private static int bruteforce(int[] A, int[] B, int length) {
+        Arrays.sort(A);
+        Arrays.sort(B);
+        int result = 0;
+        for(int i = 0; i < A.length; i++) {
+
+            result += A[i] * B[length-i-1];
+        }
+        return result;
     }
 
     public static void main(String[] args) {
