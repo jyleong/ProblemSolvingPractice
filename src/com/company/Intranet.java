@@ -4,6 +4,8 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 /**
  * Created by JamesL on 3/24/2017.
@@ -27,16 +29,19 @@ public class Intranet {
             while(testCases < numTests) {
                 int numWires  = Integer.parseInt(in.readLine());
                 int i = 0;
+                ArrayList<int[]> listTuples = new ArrayList<int[]>();
                 while(i < numWires) {
                     String[] line = in.readLine().split(" ");
                     int A = Integer.parseInt(line[0]);
                     int B = Integer.parseInt(line[1]);
+                    int[] tuple = {A,B};
+                    listTuples.add(tuple);
                     i++;
                 }
-
-
-
-                // writer.println("Case #" + testCases + ": " + String.format("%04d",result));
+                testCases++;
+                int result = findNumIntersections(listTuples);
+                System.out.println("Case #" + testCases + ": " + result);
+                writer.println("Case #" + testCases + ": " + result);
             }
             in.close();
             writer.close();
@@ -47,28 +52,26 @@ public class Intranet {
         }
     }
 
-    public static int occurence(String input) {
-        int[][] DP = new int[WELCOME.length()+1][input.length()+1];
-        DP[0][0] = 1;
-        for(int t = 0; t < input.length()+1; t++) {
-            DP[0][t] = 1;
-        }
-        for(int i = 0; i < WELCOME.length(); i++) {
-            for(int j = 0; j < input.length(); j++) {
-                if (WELCOME.charAt(i) == input.charAt(j)) {
-                    DP[i+1][j+1] = (DP[i+1][j] + DP[i][j+1])%10000;
-                }
-                else {
-                    DP[i+1][j+1] = DP[i+1][j];
+    public static int findNumIntersections(ArrayList<int[]> listTuples) {
+        int count = 0;
+        ArrayList<int[]> visitedList = new ArrayList<int[]>();
+        visitedList.add(listTuples.get(0));
+        for (int j = 1; j < listTuples.size(); j++) {
+            int[] current = listTuples.get(j);
+            for (int[] visited : visitedList) {
+                if ((current[0] < visited[0] && current[1] > visited[1]) ||
+                        (current[0] > visited[0] && current[1] < visited[1])) {
+                    count++;
                 }
             }
+            visitedList.add(current);
         }
-        return DP[WELCOME.length()][input.length()];
+        return count;
     }
 
     public static void main(String[] args) {
         // write your code here
-        Intranet.Solution("C:\\Users\\JamesL\\Downloads\\C-large-practice.in");
+        Intranet.Solution("C:\\Users\\JamesL\\Downloads\\A-large-practice.in");
 
     }
 }
