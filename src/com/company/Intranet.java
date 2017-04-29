@@ -71,7 +71,7 @@ public class Intranet {
 
     public static void main(String[] args) {
         // write your code here
-        Intranet.Solution("C:\\Users\\JamesL\\Downloads\\A-large-practice.in");
+        Intranet.Solution("C:\\Users\\JamesL\\Downloads\\A-small-practice.in");
 
     }
 }
